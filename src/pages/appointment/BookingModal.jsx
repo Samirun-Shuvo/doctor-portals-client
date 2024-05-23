@@ -6,7 +6,7 @@ import emailjs from "@emailjs/browser";
 
 /* eslint-disable react/prop-types */
 const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
-  const { _id, name, slots,price } = treatment;
+  const { _id, name, slots, price } = treatment;
   const [user] = useAuthState(auth);
   const formatedDate = format(date, "PP");
 
@@ -15,7 +15,7 @@ const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
       .send("service_jb96gwt", "template_6pvbn0t", booking, "hxJ6ABoPK03KoCgzs")
       .then(
         () => {
-          console.log("Email Send SUCCESS!");
+          toast.success("An apponitment email send successfully!");
         },
         (error) => {
           console.log("FAILED...", error.text);
