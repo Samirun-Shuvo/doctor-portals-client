@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 const Service = ({ service, setTreatment }) => {
-  const { name, slots } = service;
+  const { name, slots, price } = service;
 
-  const handleBookingClick = (service) => {
-    setTreatment(service);
+  const handleBookingClick = async (service) => {
+    await setTreatment(service);
     document.getElementById("booking-modal").showModal();
   };
   return (
@@ -19,6 +19,9 @@ const Service = ({ service, setTreatment }) => {
         </p>
         <p>
           {slots.length} {slots.length ? "spaces" : "space"} available
+        </p>
+        <p>
+          <small>Price : ${price}</small>
         </p>
         <div className="card-actions justify-center">
           <button

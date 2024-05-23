@@ -2,12 +2,26 @@ import { format } from "date-fns";
 import auth from "../../firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
+import emailjs from "@emailjs/browser";
 
 /* eslint-disable react/prop-types */
-const BookingModal = ({ treatment, setTreatment, date,refetch }) => {
-  const { _id, name, slots } = treatment;
+const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
+  const { _id, name, slots,price } = treatment;
   const [user] = useAuthState(auth);
   const formatedDate = format(date, "PP");
+
+  const sendAppointmentEmail = (booking) => {
+    emailjs
+      .send("service_jb96gwt", "template_6pvbn0t", booking, "hxJ6ABoPK03KoCgzs")
+      .then(
+        () => {
+          console.log("Email Send SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -17,6 +31,7 @@ const BookingModal = ({ treatment, setTreatment, date,refetch }) => {
       treatment: name,
       date: formatedDate,
       slot,
+      price,
       patient: user.email,
       patientName: user.displayName,
       phone: e.target.phone.value,
@@ -31,16 +46,24 @@ const BookingModal = ({ treatment, setTreatment, date,refetch }) => {
       .then((data) => {
         if (data.success) {
           toast.success(`Appointment is set, ${formatedDate} at ${slot}`);
+          sendAppointmentEmail({
+            ...booking,
+            name: user.displayName,
+            email: user.email,
+            subject: `Your appointment for ${booking.treatment} is on ${formatedDate} at ${slot} is Confirmed.`,
+            message: `Your appointment for ${booking.treatment} is Confirmed. Looking forward to seeing you on ${formatedDate} at ${slot}.`,
+          });
         } else {
           toast.error(
             `Already have an appointment on ${data?.booking?.date} at ${data?.booking?.slot}`
           );
         }
-        //for close the modal
+        // For closing the modal
         refetch();
         setTreatment(null);
       });
   };
+
   return (
     <dialog id="booking-modal" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box">
@@ -48,10 +71,14 @@ const BookingModal = ({ treatment, setTreatment, date,refetch }) => {
           <h3 className="font-bold text-lg text-secondary">
             Booking for : {name}
           </h3>
-          <div className="">
+          <div>
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn font-bold">X</button>
+              <button
+                className="btn font-bold"
+                onClick={() => setTreatment(null)}
+              >
+                X
+              </button>
             </form>
           </div>
         </div>
@@ -61,13 +88,14 @@ const BookingModal = ({ treatment, setTreatment, date,refetch }) => {
         >
           <input
             type="text"
-            value={format(date, "PP")}
+            value={formatedDate}
             disabled
             className="input input-bordered w-full max-w-xs"
           />
           <select
             name="slot"
             className="select select-bordered w-full max-w-xs"
+            required
           >
             {slots.map((slot, i) => (
               <option key={i} value={slot}>
@@ -93,6 +121,7 @@ const BookingModal = ({ treatment, setTreatment, date,refetch }) => {
             type="text"
             name="phone"
             placeholder="Phone Number"
+            required
             className="input input-bordered w-full max-w-xs"
           />
           <input

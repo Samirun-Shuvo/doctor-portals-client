@@ -1,9 +1,12 @@
 import About from "./pages/about/About";
 import Appointment from "./pages/appointment/Appointment";
+import AddDoctors from "./pages/dashboard/AddDoctors";
 import Dashboard from "./pages/dashboard/Dashboard";
+import ManageDoctors from "./pages/dashboard/ManageDoctors";
 import MyAppointments from "./pages/dashboard/MyAppointments";
 import MyHistory from "./pages/dashboard/MyHistory";
 import MyReviews from "./pages/dashboard/MyReviews";
+import Payment from "./pages/dashboard/Payment";
 import Users from "./pages/dashboard/Users";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
@@ -27,7 +30,10 @@ function App() {
           <Route index element={<MyAppointments></MyAppointments>}></Route>
           <Route path="myreviews" element={<MyReviews></MyReviews>}></Route>
           <Route path="myhistory" element={<MyHistory></MyHistory>}></Route>
+          <Route path="payment/:id" element={<Payment></Payment>}></Route>
           <Route path="users" element={<RequireAdmin><Users></Users></RequireAdmin>}></Route>
+          <Route path="addDoctor" element={<RequireAdmin><AddDoctors></AddDoctors></RequireAdmin>}></Route>
+          <Route path="manageDoctor" element={<RequireAdmin><ManageDoctors></ManageDoctors></RequireAdmin>}></Route>
         </Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
