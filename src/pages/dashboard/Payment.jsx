@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import Loading from "../shared/Loading";
+import StripeWrapper from "./StripeWrapper";
 import CheckoutForm from "./CheckoutForm";
 
 const Payment = () => {
@@ -40,7 +41,9 @@ const Payment = () => {
       </div>
       <div className="card flex-shrink-0 w-50 max-w-md shadow-2xl bg-base-100">
         <div className="card-body">
-          <CheckoutForm />
+          <StripeWrapper>
+            <CheckoutForm appointment={appointment}/>
+          </StripeWrapper>
         </div>
       </div>
     </div>
