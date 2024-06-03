@@ -30,7 +30,6 @@ const AvailableAppointment = ({ date }) => {
   } = useQuery(["available", formattedDate], fetchPosts);
 
   if (isLoading) return <Loading></Loading>;
-
   return (
     <div>
       <h4 className="text-center text-xl text-secondary">
