@@ -3,6 +3,7 @@ import Loading from "../shared/Loading";
 import DoctorRows from "./DoctorRows";
 import { useState } from "react";
 import DeleteConfirmModal from "./DeleteConfirmModal";
+import { baseUrl } from "../../../public/baseUrl";
 
 const ManageDoctors = () => {
   const [deletingDoctor, setDeletingDoctor] = useState(null);
@@ -11,7 +12,7 @@ const ManageDoctors = () => {
     isLoading,
     refetch,
   } = useQuery("doctors", () =>
-    fetch("http://localhost:5000/doctor", {
+    fetch(`${baseUrl}/doctor`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },

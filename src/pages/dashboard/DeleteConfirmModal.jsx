@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import { toast } from "react-toastify";
+import { baseUrl } from "../../../public/baseUrl";
 
-const DeleteConfirmModal = ({ deletingDoctor, refetch ,setDeletingDoctor}) => {
+const DeleteConfirmModal = ({ deletingDoctor, refetch, setDeletingDoctor }) => {
   const { name, email } = deletingDoctor;
   const handleDelete = (email) => {
-    fetch(`http://localhost:5000/doctor/${email}`, {
+    fetch(`${baseUrl}/doctor/${email}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -15,7 +16,7 @@ const DeleteConfirmModal = ({ deletingDoctor, refetch ,setDeletingDoctor}) => {
       .then((data) => {
         if (data.deletedCount) {
           toast.success(`Doctor : ${name} is deleted successfully`);
-          setDeletingDoctor(null)
+          setDeletingDoctor(null);
           refetch();
         }
       });

@@ -5,6 +5,7 @@ import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
 import "./checkoutForm.css";
 import { format } from "date-fns";
+import { baseUrl } from "../../../public/baseUrl";
 
 const CheckoutForm = ({ appointment }) => {
   const stripe = useStripe();
@@ -17,6 +18,7 @@ const CheckoutForm = ({ appointment }) => {
   const { _id, price, patient, patientName, date, treatment, slot } =
     appointment;
   const formatedDate = format(date, "PP");
+
 
   const sendPaymentConfirmationEmail = (appointment) => {
     emailjs
@@ -40,7 +42,7 @@ const CheckoutForm = ({ appointment }) => {
     const fetchClientSecret = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/create-payment-intent",
+          `${baseUrl}/create-payment-intent`,
           {
             method: "POST",
             headers: {
@@ -112,7 +114,7 @@ const CheckoutForm = ({ appointment }) => {
           appointment: _id,
           transactionId: paymentIntent.id,
         };
-        fetch(`http://localhost:5000/booking/${_id}`, {
+        fetch(`${baseUrl}/booking/${_id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

@@ -1,10 +1,11 @@
 import { useQuery } from "react-query";
 import Loading from "../shared/Loading";
 import UserRows from "./UserRows";
+import { baseUrl } from "../../../public/baseUrl";
 
 const Users = () => {
   const { data: users, isLoading,refetch } = useQuery("users", () =>
-    fetch("http://localhost:5000/user",{
+    fetch(`${baseUrl}/user`,{
         method: "GET",
         headers: {
             authorization:`Bearer ${localStorage.getItem('accessToken')}`

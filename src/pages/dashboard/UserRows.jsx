@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
 
 import { toast } from "react-toastify";
+import { baseUrl } from "../../../public/baseUrl";
 
 const UserRows = ({ user, refetch, index }) => {
   const { email, role } = user;
   const makeAdmin = () => {
-    fetch(`http://localhost:5000/user/admin/${email}`, {
+    fetch(`${baseUrl}/user/admin/${email}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,

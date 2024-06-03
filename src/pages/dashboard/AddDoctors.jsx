@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import Loading from "../shared/Loading";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { baseUrl } from "../../../public/baseUrl";
 
 const AddDoctors = () => {
   const {
@@ -13,7 +14,7 @@ const AddDoctors = () => {
   } = useForm();
   const navigate = useNavigate();
   const { data: services, isLoading } = useQuery("services", () =>
-    fetch("http://localhost:5000/services").then((res) => res.json())
+    fetch(`${baseUrl}/services`).then((res) => res.json())
   );
   const imageBbApiKey = "54819920605e585c5fd38adc008fa563";
 
@@ -33,7 +34,7 @@ const AddDoctors = () => {
             specialty: data.specialty,
             img: img,
           };
-          fetch("http://localhost:5000/doctor", {
+          fetch(`${baseUrl}/doctor`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -6,6 +6,7 @@ import Service from "./Service";
 import BookingModal from "./BookingModal";
 import { useQuery } from "react-query";
 import Loading from "../shared/Loading";
+import { baseUrl } from "../../../public/baseUrl";
 
 const AvailableAppointment = ({ date }) => {
   // const [services, setServices] = useState([]);
@@ -14,7 +15,7 @@ const AvailableAppointment = ({ date }) => {
 
   const fetchPosts = async () => {
     const response = await fetch(
-      `http://localhost:5000/available?date=${formattedDate}`
+      `${baseUrl}/available?date=${formattedDate}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");

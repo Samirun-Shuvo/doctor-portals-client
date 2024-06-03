@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { baseUrl } from "../../public/baseUrl";
 
 const useAdmin = (user) => {
   const [admin, setAdmin] = useState(false);
@@ -6,7 +7,7 @@ const useAdmin = (user) => {
   useEffect(() => {
     const email = user?.email;
     if (email) {
-      fetch(`http://localhost:5000/admin/${email}`, {
+      fetch(`${baseUrl}/admin/${email}`, {
         method: "GET",
         headers: {
           "content-type": "application/json",

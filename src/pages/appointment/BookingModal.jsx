@@ -3,6 +3,7 @@ import auth from "../../firebase.init";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 import emailjs from "@emailjs/browser";
+import { baseUrl } from "../../../public/baseUrl";
 
 /* eslint-disable react/prop-types */
 const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
@@ -37,7 +38,7 @@ const BookingModal = ({ treatment, setTreatment, date, refetch }) => {
       phone: e.target.phone.value,
     };
 
-    fetch("http://localhost:5000/booking", {
+    fetch(`${baseUrl}/booking`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(booking),

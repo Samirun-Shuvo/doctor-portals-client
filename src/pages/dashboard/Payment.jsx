@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import Loading from "../shared/Loading";
 import StripeWrapper from "./StripeWrapper";
 import CheckoutForm from "./CheckoutForm";
+import { baseUrl } from "../../../public/baseUrl";
 
 const Payment = () => {
   const { id } = useParams();
-  const url = `http://localhost:5000/booking/${id}`;
+  const url = `${baseUrl}/booking/${id}`;
   const { data: appointment, isLoading } = useQuery(["booking", id], () =>
     fetch(url, {
       method: "GET",
